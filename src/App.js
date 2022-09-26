@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -16,7 +17,14 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('logging in with', username, password)
+    try {
+      const user = await loginService.login({username, password})
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch(exception) {
+      console.log(exception)
+    }
   }
 
   if (user === null) {
@@ -51,6 +59,9 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+
+      <h4>{user.name} logged in</h4>
+
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
