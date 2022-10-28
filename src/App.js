@@ -68,6 +68,14 @@ const App = () => {
     }
   }
 
+  const addLike = async (blogObject) => {
+    try {
+      return await blogService.like(blogObject, (blogObject.likes+1))
+    } catch (exception) {
+      handleError(exception)
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -118,7 +126,7 @@ const App = () => {
         <Togglable buttonLabel="new blog" ref={BlogFormRef}>
           <BlogForm createBlog={addBlog} />
         </Togglable>
-        {blogs.map(blog => <Blog key={blog.id} blog={blog}/>)}
+        {blogs.sort((a, b) => b.likes - a.likes).map(blog => <Blog key={blog.id} givenBlog={blog} likeButton={addLike}/>)}
       </div>
     </div>
   )
