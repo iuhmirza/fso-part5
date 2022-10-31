@@ -8,13 +8,13 @@ const setToken = newToken => {
 }
 
 const getAll = () => {
-  const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+    const request = axios.get(baseUrl)
+    return request.then(response => response.data)
 }
 
 const create = async newObject => {
-    const config= {
-        headers: {Authorization: token},
+    const config = {
+        headers: { Authorization: token },
     }
 
     const response = await axios.post(baseUrl, newObject, config)
@@ -23,19 +23,19 @@ const create = async newObject => {
 
 const like = async (blog, likes) => {
     const config = {
-        headers: {Authorization : token}
+        headers: { Authorization: token }
     }
 
-    const response = await axios.put(`${baseUrl}/${blog.id}`, { "likes" : likes }, config)
+    const response = await axios.put(`${baseUrl}/${blog.id}`, { "likes": likes }, config)
     return response.data
 
 }
 
 const remove = async (blog) => {
     const config = {
-        headers : {Authorization : token}
+        headers: { Authorization: token }
     }
-    
+
     console.log(config.headers)
     const response = await axios.delete(`${baseUrl}/${blog.id}`, config)
     console.log(response)
