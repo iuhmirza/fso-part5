@@ -27,6 +27,7 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 
@@ -72,6 +73,15 @@ const App = () => {
     try {
       return await blogService.like(blogObject, (blogObject.likes+1))
     } catch (exception) {
+      handleError(exception)
+    }
+  }
+
+  const removeBlog = async (blog) => {
+    try {
+      setBlogs(blogs.filter(item => item.id !== blog.id))
+      return await blogService.remove(blog)
+    } catch(exception) {
       handleError(exception)
     }
   }
@@ -126,7 +136,7 @@ const App = () => {
         <Togglable buttonLabel="new blog" ref={BlogFormRef}>
           <BlogForm createBlog={addBlog} />
         </Togglable>
-        {blogs.sort((a, b) => b.likes - a.likes).map(blog => <Blog key={blog.id} givenBlog={blog} likeButton={addLike}/>)}
+        {blogs.sort((a, b) => b.likes - a.likes).map(blog => <Blog key={blog.id} givenBlog={blog} likeButton={addLike} removeButton={removeBlog}/>)}
       </div>
     </div>
   )
