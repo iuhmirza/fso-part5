@@ -1,5 +1,5 @@
-import Togglable from "./Togglable"
-import {useState} from 'react'
+import Togglable from './Togglable'
+import { useState } from 'react'
 
 const Blog = ({ givenBlog, likeButton, removeButton }) => {
   const [blog, setBlog] = useState(givenBlog)
@@ -16,16 +16,16 @@ const Blog = ({ givenBlog, likeButton, removeButton }) => {
   const addLike = async (event) => {
     event.preventDefault()
     setBlog(await likeButton(blog))
-    
+
   }
-  
+
   const removeBlog = async (event) => {
     event.preventDefault()
-    if(window.confirm(`Remove ${blog.title}?`)===true){
+    if (window.confirm(`Remove ${blog.title}?`) === true) {
       removeButton(blog)
     }
   }
-  
+
   return (
     <div style={blogStyle}>
       <p>{blog.title} - {blog.author}</p>
