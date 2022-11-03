@@ -15,7 +15,7 @@ const Blog = ({ givenBlog, likeButton, removeButton }) => {
 
   const addLike = async (event) => {
     event.preventDefault()
-    likeButton()
+    likeButton(blog)
     setBlog({ ...blog, likes: blog.likes+1 })
 
   }

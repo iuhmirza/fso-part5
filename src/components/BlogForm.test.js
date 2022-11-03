@@ -6,9 +6,9 @@ import BlogForm from './BlogForm'
 
 test('handler is called when correct form is submitted', async () => {
   const newBlog = {
-    title: "A great title",
-    author: "A great author",
-    url: "great.com"
+    title: 'A great title',
+    author: 'A great author',
+    url: 'great.com'
   }
 
 

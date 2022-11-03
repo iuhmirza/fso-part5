@@ -71,7 +71,8 @@ const App = () => {
 
   const addLike = async (blogObject) => {
     try {
-      return await blogService.like(blogObject, (blogObject.likes+1))
+      console.log(blogObject)
+      return await blogService.like(blogObject, (blogObject.likes + 1))
     } catch (exception) {
       handleError(exception)
     }
@@ -81,7 +82,7 @@ const App = () => {
     try {
       setBlogs(blogs.filter(item => item.id !== blog.id))
       return await blogService.remove(blog)
-    } catch(exception) {
+    } catch (exception) {
       handleError(exception)
     }
   }
@@ -98,6 +99,7 @@ const App = () => {
               type='text'
               value={username}
               name='Username'
+              id='username'
               onChange={({ target }) => setUsername(target.value)}
             />
           </div>
@@ -107,10 +109,11 @@ const App = () => {
               type='password'
               value={password}
               name='Password'
+              id='password'
               onChange={({ target }) => setPassword(target.value)}
             />
           </div>
-          <button type='submit'>login</button>
+          <button type='submit' id='login-button'>login</button>
         </form>
       </div>
     )
@@ -121,7 +124,7 @@ const App = () => {
       <h2>blogs</h2>
       <Notification message={message} error={error} />
       {user.name} logged in
-      <button onClick={() => {
+      <button id='logout-button' onClick={() => {
         window.localStorage.removeItem('loggedInUser')
         setUser(null)
         setMessage('Logged out')
@@ -136,7 +139,9 @@ const App = () => {
         <Togglable buttonLabel="new blog" ref={BlogFormRef}>
           <BlogForm createBlog={addBlog} />
         </Togglable>
-        {blogs.sort((a, b) => b.likes - a.likes).map(blog => <Blog key={blog.id} givenBlog={blog} likeButton={addLike} removeButton={removeBlog}/>)}
+        <div className='blog'>
+          {blogs.sort((a, b) => b.likes - a.likes).map(blog => <Blog key={blog.id} givenBlog={blog} likeButton={addLike} removeButton={removeBlog} />)}
+        </div>
       </div>
     </div>
   )
